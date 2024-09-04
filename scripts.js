@@ -87,48 +87,135 @@ const quotes = [
     { text: "The best revenge is massive success.", author: "Frank Sinatra" },
     { text: "Life is really simple, but we insist on making it complicated.", author: "Confucius" },
     { text: "The purpose of our lives is to be happy.", author: "Dalai Lama" },
+    {
+        text: "The best way to predict the future is to create it.",
+        author: "Peter Drucker"
+    },
+    {
+        text: "Do what you can, with what you have, where you are.",
+        author: "Theodore Roosevelt"
+    },
+    {
+        text: "Success is not the key to happiness. Happiness is the key to success.",
+        author: "Albert Schweitzer"
+    },
+    {
+        text: "Life is 10% what happens to us and 90% how we react to it.",
+        author: "Charles R. Swindoll"
+    },
+    {
+        text: "Your time is limited, so don’t waste it living someone else’s life.",
+        author: "Steve Jobs"
+    },
+    {
+        text: "In the end, we only regret the chances we didn’t take.",
+        author: "Lewis Carroll"
+    },
+    {
+        text: "The only way to do great work is to love what you do.",
+        author: "Steve Jobs"
+    },
+    {
+        text: "Success is not how high you have climbed, but how you make a positive difference to the world.",
+        author: "Roy T. Bennett"
+    },
+    {
+        text: "The purpose of life is to believe, to hope, and to strive.",
+        author: "Indira Gandhi"
+    },
+    {
+        text: "Do not wait to strike till the iron is hot; but make it hot by striking.",
+        author: "William Butler Yeats"
+    },
+    {
+        text: "The best revenge is massive success.",
+        author: "Frank Sinatra"
+    },
+    {
+        text: "An unexamined life is not worth living.",
+        author: "Socrates"
+    },
+    {
+        text: "What you get by achieving your goals is not as important as what you become by achieving your goals.",
+        author: "Zig Ziglar"
+    },
+    {
+        text: "The journey of a thousand miles begins with one step.",
+        author: "Lao Tzu"
+    },
+    {
+        text: "The best way to find yourself is to lose yourself in the service of others.",
+        author: "Mahatma Gandhi"
+    },
+    {
+        text: "The only thing we have to fear is fear itself.",
+        author: "Franklin D. Roosevelt"
+    },
+    {
+        text: "The best preparation for tomorrow is doing your best today.",
+        author: "H. Jackson Brown, Jr."
+    },
+    {
+        text: "If you want to live a happy life, tie it to a goal, not to people or things.",
+        author: "Albert Einstein"
+    },
+    {
+        text: "It always seems impossible until it’s done.",
+        author: "Nelson Mandela"
+    },
+    {
+        text: "You must be the change you wish to see in the world.",
+        author: "Mahatma Gandhi"
+    },
+    {
+        text: "The mind is everything. What you think you become.",
+        author: "Buddha"
+    },
+    {
+        text: "Believe you can and you're halfway there.",
+        author: "Theodore Roosevelt"
+    },
+    {
+        text: "Act as if what you do makes a difference. It does.",
+        author: "William James"
+    },
+    {
+        text: "You miss 100% of the shots you don’t take.",
+        author: "Wayne Gretzky"
+    },
+    {
+        text: "It does not matter how slowly you go as long as you do not stop.",
+        author: "Confucius"
+    }
 ];
 
 
-let currentQuoteIndex = 0;
-let userSubmittedQuote = null;
+const quoteElement = document.getElementById('quote');
+const authorElement = document.getElementById('author');
+const newQuoteBtn = document.getElementById('new-quote-btn');
 
-const quoteText = document.getElementById('quote');
-const quoteAuthor = document.getElementById('author');
-const quoteForm = document.getElementById('quoteForm');
-const userQuoteInput = document.getElementById('user-quote');
-const userAuthorInput = document.getElementById('user-author');
+function newQuote() {
+    const randomQuote = quotes[Math.floor(Math.random() * quotes.length)];
+    quoteElement.style.opacity = 0;
+    authorElement.style.opacity = 0;
 
-function displayQuote(quote) {
-    quoteText.textContent = `"${quote.text}"`;
-    quoteAuthor.textContent = `- ${quote.author}`;
+    setTimeout(() => {
+        quoteElement.textContent = `"${randomQuote.text}"`;
+        authorElement.textContent = `- ${randomQuote.author}`;
+        quoteElement.style.opacity = 1;
+        authorElement.style.opacity = 1;
+    }, 600);
 }
 
-function getNextQuote() {
-    if (userSubmittedQuote) {
-        displayQuote(userSubmittedQuote);
-        userSubmittedQuote = null; // Reset after displaying
-    } else {
-        currentQuoteIndex = (currentQuoteIndex + 1) % quotes.length;
-        displayQuote(quotes[currentQuoteIndex]);
-    }
-}
+newQuoteBtn.addEventListener('click', newQuote);
+
+document.addEventListener('DOMContentLoaded', newQuote);
+
+// Fetch quotes when the page loads
+fetchQuotes();
 
 document.getElementById('new-quote-btn').addEventListener('click', getNextQuote);
 
-quoteForm.addEventListener('submit', function(event) {
-    event.preventDefault();
-
-    userSubmittedQuote = {
-        text: userQuoteInput.value,
-        author: userAuthorInput.value || 'Anonymous' // Default to 'Anonymous' if author is not provided
-    };
-
-    quotes.push(userSubmittedQuote); // Add to the list of quotes
-
-    displayQuote(userSubmittedQuote); // Immediately display the new quote
-    quoteForm.reset(); // Clear the form fields
-});
 newQuoteBtn.addEventListener('click', newQuote);
 
 document.addEventListener('DOMContentLoaded', newQuote);

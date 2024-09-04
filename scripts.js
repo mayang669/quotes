@@ -190,67 +190,38 @@ const quotes = [
 ];
 
 
-const quoteElement = document.getElementById('quote');
-const authorElement = document.getElementById('author');
-const newQuoteBtn = document.getElementById('new-quote-btn');
-
-function newQuote() {
-    const randomQuote = quotes[Math.floor(Math.random() * quotes.length)];
-    quoteElement.style.opacity = 0;
-    authorElement.style.opacity = 0;
-
-    setTimeout(() => {
-        quoteElement.textContent = `"${randomQuote.text}"`;
-        authorElement.textContent = `- ${randomQuote.author}`;
-        quoteElement.style.opacity = 1;
-        authorElement.style.opacity = 1;
-    }, 600);
-}
-
-newQuoteBtn.addEventListener('click', newQuote);
-
-document.addEventListener('DOMContentLoaded', newQuote);
-
-// Fetch quotes when the page loads
-fetchQuotes();
-
-document.getElementById('new-quote-btn').addEventListener('click', getNextQuote);
-
-newQuoteBtn.addEventListener('click', newQuote);
-
-document.addEventListener('DOMContentLoaded', newQuote);
-const portfolioBtn = document.getElementById('portfolio-btn');
-
-portfolioBtn.addEventListener('click', () => {
-    window.location.href = 'https://mayang669.github.io/profile'; // Replace with your actual portfolio URL
-});
 const profilePics = [
-    'porto123.jpg',
-    'p0rto13.jpg', // Replace with actual image paths
-    'mine.jpg',
+    'porto123.jpg', // Replace with actual image paths
+    'p0rto13.jpg',
+    'mine.jpg'
 ];
 
+const quoteElement = document.getElementById('quote');
+const authorElement = document.getElementById('author');
 const profilePic = document.getElementById('profile-pic');
-const profilePicContainer = document.querySelector('.profile-pic-container');
+const newQuoteBtn = document.getElementById('new-quote-btn');
+const portfolioBtn = document.getElementById('portfolio-btn');
+
 let currentPicIndex = 0;
 
 function changeProfilePic() {
-    // Apply fade-out effect
-    profilePic.classList.add('fade-out');
-    
-    // Wait for the fade-out transition to complete before changing the image
-    setTimeout(() => {
-        currentPicIndex = (currentPicIndex + 1) % profilePics.length;
-        profilePic.src = profilePics[currentPicIndex];
-
-        // Remove fade-out class and apply fade-in effect
-        profilePic.classList.remove('fade-out');
-        profilePic.classList.add('fade-in');
-    }, 500); // Match this time with the CSS opacity transition duration
+    currentPicIndex = (currentPicIndex + 1) % profilePics.length;
+    profilePic.src = profilePics[currentPicIndex];
 }
+
+function displayQuote() {
+    const randomQuote = quotes[Math.floor(Math.random() * quotes.length)];
+    quoteElement.textContent = `"${randomQuote.text}"`;
+    authorElement.textContent = `- ${randomQuote.author}`;
+}
+
+newQuoteBtn.addEventListener('click', displayQuote);
 
 // Automatically change profile picture every 5 seconds
 setInterval(changeProfilePic, 5000);
 
-// Initialize profile picture with fade-in effect
-profilePic.classList.add('fade-in');
+document.addEventListener('DOMContentLoaded', displayQuote);
+
+portfolioBtn.addEventListener('click', () => {
+    window.location.href = 'https://mayang669.github.io/profile'; // Replace with your actual portfolio URL
+});

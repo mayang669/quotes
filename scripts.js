@@ -90,23 +90,45 @@ const quotes = [
 ];
 
 
-const quoteElement = document.getElementById('quote');
-const authorElement = document.getElementById('author');
-const newQuoteBtn = document.getElementById('new-quote-btn');
+let currentQuoteIndex = 0;
+let userSubmittedQuote = null;
 
-function newQuote() {
-    const randomQuote = quotes[Math.floor(Math.random() * quotes.length)];
-    quoteElement.style.opacity = 0;
-    authorElement.style.opacity = 0;
+const quoteText = document.getElementById('quote');
+const quoteAuthor = document.getElementById('author');
+const quoteForm = document.getElementById('quoteForm');
+const userQuoteInput = document.getElementById('user-quote');
+const userAuthorInput = document.getElementById('user-author');
 
-    setTimeout(() => {
-        quoteElement.textContent = `"${randomQuote.text}"`;
-        authorElement.textContent = `- ${randomQuote.author}`;
-        quoteElement.style.opacity = 1;
-        authorElement.style.opacity = 1;
-    }, 600);
+function displayQuote(quote) {
+    quoteText.textContent = `"${quote.text}"`;
+    quoteAuthor.textContent = `- ${quote.author}`;
 }
 
+function getNextQuote() {
+    if (userSubmittedQuote) {
+        displayQuote(userSubmittedQuote);
+        userSubmittedQuote = null; // Reset after displaying
+    } else {
+        currentQuoteIndex = (currentQuoteIndex + 1) % quotes.length;
+        displayQuote(quotes[currentQuoteIndex]);
+    }
+}
+
+document.getElementById('new-quote-btn').addEventListener('click', getNextQuote);
+
+quoteForm.addEventListener('submit', function(event) {
+    event.preventDefault();
+
+    userSubmittedQuote = {
+        text: userQuoteInput.value,
+        author: userAuthorInput.value || 'Anonymous' // Default to 'Anonymous' if author is not provided
+    };
+
+    quotes.push(userSubmittedQuote); // Add to the list of quotes
+
+    displayQuote(userSubmittedQuote); // Immediately display the new quote
+    quoteForm.reset(); // Clear the form fields
+});
 newQuoteBtn.addEventListener('click', newQuote);
 
 document.addEventListener('DOMContentLoaded', newQuote);
